@@ -40,7 +40,7 @@ public partial class CheckIfReachableAction : Action
         m_Path = new NavMeshPath();
         Vector3 targetPos = Target.Value.transform.position;
 
-        // 2. Step 1: Check if the target's position is actually on/near the NavMesh boundaries
+        //Step 1: Check if the target's position is actually on/near the NavMesh boundaries
         NavMeshHit hit;
         if (!NavMesh.SamplePosition(targetPos, out hit, 2f, NavMesh.AllAreas))
         {
@@ -48,7 +48,7 @@ public partial class CheckIfReachableAction : Action
             return Status.Failure;
         }
 
-        // 3. Step 2: Calculate if a complete path exists to that snapped position
+        //Step 2: Calculate if a complete path exists to that snapped position
         navAgent.CalculatePath(hit.position, m_Path);
 
         if (m_Path.status == NavMeshPathStatus.PathInvalid)
@@ -62,7 +62,7 @@ public partial class CheckIfReachableAction : Action
             return Status.Failure;
         }
 
-        // 4. Step 3: If valid, apply the pre-calculated path to the agent
+        //Step 3: If valid, apply the pre-calculated path to the agent
         navAgent.SetPath(m_Path);
         return Status.Running;
     }

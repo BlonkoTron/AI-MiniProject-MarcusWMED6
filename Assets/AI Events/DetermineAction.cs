@@ -94,7 +94,7 @@ public partial class DetermineAction : Action
         float wAttack = 0f;
         float wShoot = 0f;
 
-        // 1. Determine weights based on distance zone
+        //Determine weights based on distance zone
         if (distance < closeRange)
         {
             wReposition = closeRepositionWeight;
@@ -107,18 +107,18 @@ public partial class DetermineAction : Action
             wAttack = medAttackWeight;
             wShoot = medShootWeight;
         }
-        else // Far range
+        else // distance > mediumRange (This is far range)
         {
             wReposition = farRepositionWeight;
             wAttack = farAttackWeight;
             wShoot = farShootWeight;
         }
 
-        // 2. Choose state using weighted random selection
+        
         return ChooseWeightedState(wReposition, wAttack, wShoot);
 
     }
-
+    
     private ChosenAction ChooseWeightedState(float repoW, float attackW, float shootW)
     {
         float totalWeight = repoW + attackW + shootW;
@@ -126,14 +126,18 @@ public partial class DetermineAction : Action
 
         if (randomValue < repoW)
         {
+            Debug.Log(randomValue + "ChosenAction.Repos");
             return ChosenAction.Repos;
+            
         }
         else if (randomValue < repoW + attackW)
         {
+            Debug.Log(randomValue + "ChosenAction.Attack");
             return ChosenAction.Attack;
         }
         else
         {
+            Debug.Log(randomValue + "ChosenAction.Shoot");
             return ChosenAction.Shoot;
         }
     }
